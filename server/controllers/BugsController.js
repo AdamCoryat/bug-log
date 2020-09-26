@@ -27,7 +27,7 @@ export class BugsController extends BaseController {
   }
   async getById(req, res, next) {
     try {
-      req.body.creator = req.user.email;
+      req.body.creator = req.userInfo.email;
       let data = await bugsService.findById(req.params.id, req.user.email);
       return res.send(data);
     } catch (error) {
@@ -36,7 +36,7 @@ export class BugsController extends BaseController {
   }
   async getNotesByBugId(req, res, next) {
     try {
-      req.body.creator = req.user.email;
+      req.body.creator = req.userInfo.email;
       let id = req.params.id;
       let data = await notesService.getNotesByBugId({ bugId: id });
       return res.send(data);
@@ -46,7 +46,7 @@ export class BugsController extends BaseController {
   }
   async create(req, res, next) {
     try {
-      req.body.creatorEmail = req.user.email;
+      req.body.creatorEmail = req.userInfo.email;
       let data = await bugsService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {
@@ -55,23 +55,20 @@ export class BugsController extends BaseController {
   }
   async edit(req, res, next) {
     try {
-      if (req.body.closed == false) {
-        let data = await bugsService.edit(
-          req.params.id,
-          req.user.email,
-          req.body
-        );
-        res.send(data);
-      }
-      return res.send("Bug has been closed");
+      let data = await bugsService.edit(
+        req.params.id,
+        req.userInfo.email,
+        req.body
+      );
+      return res.send(data);
     } catch (error) {
       next(error);
     }
   }
   async delete(req, res, next) {
     try {
-      req.body.creatorEmail = req.user.email;
-      await bugsService.softDelete(req.parmas.id, req.user.email);
+      req.body.creatorEmail = req.userInfo.email;
+      await bugsService.softDelete(req.params.id, req.userInfo.email);
       res.send("Successfully Closed!");
     } catch (error) {
       next(error);

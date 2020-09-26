@@ -5,24 +5,33 @@ class NotesService {
   async getNotesByBugId(listId) {
     let data = await dbContext.Notes.find(listId);
     if (!data) {
-      throw new BadRequest("Invalid Id or you do not own this board");
+      throw new BadRequest("Invalid Id or you do not have Permissions");
     }
     return data;
   }
-
-  edit(id, email, body) {
-    throw new Error("Method not implemented.");
+  async create(rawData) {
+    let data = await dbContext.Notes.create(rawData);
+    return data;
   }
-  create(body) {
-    throw new Error("Method not implemented.");
-  }
-
-  async findById(id, creatorEmail) {
-    let note = await dbContext.Notes.findById(id);
-    if (!note) {
-      throw new BadRequest("Invalid Id");
+  async edit(id, creatorEmail, update) {
+    let data = await dbContext.Notes.findByIdAndUpdate(
+      { _id: id, creatorEmail: creatorEmail },
+      update,
+      { new: true }
+    );
+    if (!data) {
+      throw new BadRequest("Invalid ID or you do not own this Note");
     }
-    return note;
+    return data;
+  }
+  async delete(id, creatorEmail) {
+    let data = await dbContext.Notes.findByIdAndDelete({
+      _id: id,
+      creatorEmail: creatorEmail,
+    });
+    if (!data) {
+      throw new BadRequest("Invalid Id or you dont have Permission to Delete");
+    }
   }
 }
 

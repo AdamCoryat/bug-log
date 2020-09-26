@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
     <router-link class="navbar-brand" :to="{ name: 'Home' }"
       >AppName</router-link
     >
@@ -17,7 +17,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="{ active: $route.name == 'Home' }">
-          <router-link :to="{ name: 'Home' }" class="nav-link"
+          <router-link :to="{ name: 'Home' }" class="nav-link text-light"
             >Home</router-link
           >
         </li>
@@ -26,7 +26,7 @@
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Profile' }"
         >
-          <router-link class="nav-link" :to="{ name: 'Profile' }"
+          <router-link class="nav-link text-light" :to="{ name: 'Profile' }"
             >Profile</router-link
           >
         </li>
@@ -53,16 +53,16 @@ export default {
   methods: {
     async login() {
       await this.$auth.loginWithPopup();
-      if(this.$auth.isAuthenticated){
+      if (this.$auth.isAuthenticated) {
         this.$store.dispatch("setBearer", this.$auth.bearer);
         this.$store.dispatch("getProfile");
       }
     },
     async logout() {
       this.$store.dispatch("resetBearer");
-      await this.$auth.logout({returnTo: window.location.origin});
-    }
-  }
+      await this.$auth.logout({ returnTo: window.location.origin });
+    },
+  },
 };
 </script>
 

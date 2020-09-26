@@ -27,4 +27,14 @@ export default {
 @import "./assets/_variables.scss";
 @import "bootstrap";
 @import "./assets/_overrides.scss";
+body {
+  background-color: #595f60;
+  background-image: linear-gradient(
+    135deg,
+    #3d3d3d 0%,
+    #252525 24%,
+    #0a0a0a 62%
+  );
+  min-height: 100vh;
+}
 </style>
