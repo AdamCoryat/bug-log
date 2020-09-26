@@ -3,7 +3,7 @@
     <p class="d-flex justify-content-between text-light">
       <span class="col-3">{{ note.creatorEmail }}</span
       ><span class="col-6">{{ note.content }}</span
-      ><span class="col-3 text-right">X</span>
+      ><button v-if="isCreator" @click="deleteNote">delete</button>
     </p>
   </div>
 </template>
@@ -17,8 +17,21 @@ export default {
   data() {
     return {};
   },
-  computed: {},
-  methods: {},
+  computed: {
+    isCreator() {
+      return this.$store.state.profile.email == this.note.creatorEmail;
+    },
+  },
+  methods: {
+    deleteNote() {
+      this.$store.dispatch("delete", {
+        deletePath: "notes/" + this.note.id,
+        id: this.note.id,
+        resource: "notes",
+        path: "bugs/" + this.note.bugId + "/notes",
+      });
+    },
+  },
   components: {},
 };
 </script>

@@ -1,6 +1,16 @@
 <template>
   <main class="home container-fluid">
     <section class="row">
+      <button
+        v-if="$auth.isAuthenticated"
+        type="button"
+        class="btn btn-primary btn-lg"
+        data-toggle="modal"
+        data-target="#bugForm"
+      >
+        Add Bug
+      </button>
+
       <div class="col-12 justify-content-center d-flex">
         <div
           class="card m-2 bug-window d-flex justify-content-center flex-wrap align-content-center"
@@ -21,10 +31,41 @@
         </div>
       </div>
     </section>
+    <section id="modals">
+      <form-modal id="bugForm">
+        <template v-slot:header>
+          <h5>Create New Bug</h5>
+        </template>
+        <template v-slot:body>
+          <div class="text-center d-flex">
+            <form @submit.prevent="addBug" class="m-2">
+              <input
+                type="text"
+                placeholder="title"
+                v-model="newBug.title"
+                required
+              />
+              <input
+                type="text"
+                placeholder="description"
+                v-model="newBug.description"
+                required
+                class="text-light"
+              />
+              <button class="btn btn-success border-dark" type="submit">
+                Create Bug
+              </button>
+            </form>
+          </div>
+        </template>
+      </form-modal>
+    </section>
   </main>
 </template>
 
 <script>
+import router from "../router/index.js";
+import FormModal from "../components/FormModal.vue";
 import Bug from "../components/Bug.vue";
 export default {
   name: "home",
@@ -35,16 +76,33 @@ export default {
     });
   },
   data() {
-    return {};
+    return {
+      newBug: {},
+    };
   },
   computed: {
     bugs() {
       return this.$store.state.bugs;
     },
+    activeBug() {
+      return this.$store.state.activeBug;
+    },
   },
-  methods: {},
+  methods: {
+    async addBug() {
+      // document.getElementById('bugForm').setAttribute.data-dismiss="modal
+      this.$store.dispatch("createBug", {
+        getPath: "bugs",
+        path: "bugs",
+        resource: "activeBug",
+        data: this.newBug,
+      });
+      this.newBug = {};
+    },
+  },
   components: {
     Bug,
+    FormModal,
   },
 };
 </script>

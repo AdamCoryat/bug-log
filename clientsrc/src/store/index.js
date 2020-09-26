@@ -30,6 +30,7 @@ export default new Vuex.Store({
     async getProfile({ commit }) {
       try {
         let res = await api.get("profile");
+        console.log(res);
         commit("setProfile", res.data);
       } catch (error) {
         console.error(error);
@@ -40,14 +41,25 @@ export default new Vuex.Store({
       try {
         let res = await api.get(payload.path);
         commit("setResource", { data: res.data, resource: payload.resource });
-        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async createBug({ dispatch }, payload) {
+      try {
+        let res = await api.post(payload.path, payload.data);
+        dispatch("getResource", {
+          path: payload.getPath,
+          resource: payload.resource,
+        });
+        // router.push({ name: "Details", params: { id: res.data.id } });
       } catch (error) {
         console.error(error);
       }
     },
     async create({ dispatch }, payload) {
       try {
-        await api.post(payload.path, payload.data);
+        let res = await api.post(payload.path, payload.data);
         dispatch("getResource", {
           path: payload.getPath,
           resource: payload.resource,
@@ -67,7 +79,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async deleteById({ dispatch }, payload) {
+    async delete({ dispatch }, payload) {
       try {
         dispatch("getResource", {
           path: payload.path,
