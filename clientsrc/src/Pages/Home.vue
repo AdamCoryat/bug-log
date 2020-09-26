@@ -1,12 +1,12 @@
 <template>
-  <div class="home container">
-    <div class="row">
+  <main class="home container-fluid">
+    <section class="row">
       <div class="col-12 justify-content-center d-flex">
         <div
           class="card m-2 bug-window d-flex justify-content-center flex-wrap align-content-center"
         >
-          <div class="row">
-            <div class="card bug-screen border-light">
+          <section class="row">
+            <div class="card bug-screen border-primary">
               <div class="card bg-info d-flex justify-content-between">
                 <h4 class="d-flex justify-content-between">
                   <span class="col-3">Title:</span
@@ -17,11 +17,11 @@
               </div>
               <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
             </div>
-          </div>
+          </section>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </main>
 </template>
 
 <script>
