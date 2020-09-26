@@ -4,3 +4,9 @@
   border-color: darken($color: $primary, $amount: 10);
   border-width: medium;
 }
+
+.button {
+  border-radius: 50px;
+  background: linear-gradient(145deg, #53b3b1, #62d5d3);
+  box-shadow: 20px 20px 60px #4ea9a7, -20px -20px 60px #6ae5e3;
+}
