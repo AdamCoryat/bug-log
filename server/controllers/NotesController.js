@@ -14,7 +14,7 @@ export class NotesController extends BaseController {
 
   async createNote(req, res, next) {
     try {
-      req.body.creator = req.userInfo.email;
+      req.body.creatorEmail = req.userInfo.email;
       let data = await notesService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {

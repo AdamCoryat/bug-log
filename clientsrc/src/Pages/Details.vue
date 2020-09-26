@@ -119,7 +119,8 @@ export default {
     },
     addNote() {
       this.newNote.bugId = this.$route.params.id;
-      this.newNote.creatorEmail = this.$store.state.profile.email;
+
+      this.newNote.creatorEmail = this.$store.state.profile.email.toLowerCase();
       this.$store.dispatch("create", {
         getPath: "bugs/" + this.$route.params.id + "/notes",
         path: "notes",

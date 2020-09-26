@@ -81,6 +81,7 @@ export default new Vuex.Store({
     },
     async delete({ dispatch }, payload) {
       try {
+        await api.delete(payload.deletePath);
         dispatch("getResource", {
           path: payload.path,
           resource: payload.resource,

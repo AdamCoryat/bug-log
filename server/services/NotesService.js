@@ -14,13 +14,13 @@ class NotesService {
     return data;
   }
   async edit(id, creatorEmail, update) {
-    let data = await dbContext.Notes.findByIdAndUpdate(
+    let data = await dbContext.Notes.findOneAndUpdate(
       { _id: id, creatorEmail: creatorEmail },
       update,
       { new: true }
     );
     if (!data) {
-      throw new BadRequest("Invalid ID or you do not own this Note");
+      throw new BadRequest("Invalid ID or you do not own this board");
     }
     return data;
   }
