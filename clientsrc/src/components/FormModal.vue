@@ -14,9 +14,6 @@
           </button>
         </div>
         <slot name="body"></slot>
-        <button class="btn btn-success border-dark" data-dismiss="modal">
-          Close
-        </button>
         <div class="modal-footer"></div>
       </div>
     </div>

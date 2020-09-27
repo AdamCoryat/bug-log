@@ -10,6 +10,9 @@
       >
         Add Bug
       </button>
+      <button type="button" class="btn btn-primary btn-lg" @click="filterBugs">
+        Filter Closed
+      </button>
 
       <div class="col-12 justify-content-center d-flex">
         <div
@@ -25,7 +28,9 @@
                   ><span class="col-3">Last Modified:</span>
                 </h4>
               </div>
-              <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
+              <div>
+                <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
+              </div>
             </div>
           </section>
         </div>
@@ -89,7 +94,7 @@ export default {
     },
   },
   methods: {
-    async addBug() {
+    addBug() {
       // document.getElementById('bugForm').setAttribute.data-dismiss="modal
       this.$store.dispatch("createBug", {
         getPath: "bugs",
@@ -98,6 +103,11 @@ export default {
         data: this.newBug,
       });
       this.newBug = {};
+    },
+    filterBugs() {
+      debugger;
+      return this.$store.state.bugs.filter((b) => b.closed == false);
+      console.log(this.$store.state.bugs);
     },
   },
   components: {

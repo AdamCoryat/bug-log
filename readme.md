@@ -135,12 +135,12 @@ Delete
 []- User is prompted "are you sure?" when closing a Bug
 [x]- Notes can be added and removed from a bug in the BugDetails view
 []- User prompt to remove Note from Bug
-[]- A Bug can be edited
+[x]- A Bug can be edited
 [x]- Cannot edit a Bug after it is closed
 
 #### Challenges
 
 [x]- Implement user auth
-[]- Modals for creating Bugs
-[]- Modals for creating Notes
+[x]- Modals for creating Bugs
+[x]- Modals for creating Notes
 []- Use sweet alert for prompts

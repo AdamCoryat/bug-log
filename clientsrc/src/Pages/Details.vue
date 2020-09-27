@@ -3,6 +3,15 @@
     <section class="row justify-content-center">
       <div class="col-8">
         <div class="card bg-bug p-2 m-2">
+          <button
+            v-if="$auth.isAuthenticated"
+            type="button"
+            class="btn btn-primary btn-lg"
+            data-toggle="modal"
+            data-target="#editForm"
+          >
+            Edit Bug
+          </button>
           <h1 class="text-light text-center">{{ activeBug.title }}</h1>
           <h5 class="text-light d-flex justify-content-between">
             Created By: {{ activeBug.creatorEmail }}
@@ -61,6 +70,29 @@
         </template>
       </form-modal>
     </section>
+    <section id="edit">
+      <form-modal id="editForm">
+        <template v-slot:header>
+          <h5>Edit Bug</h5>
+        </template>
+        <template v-slot:body>
+          <div class="text-center d-flex">
+            <form @submit.prevent="editBug" class="m-2">
+              <input type="text" placeholder="title" v-model="bugEdit.title" />
+              <input
+                type="text"
+                placeholder="description"
+                v-model="bugEdit.description"
+                class="text-light"
+              />
+              <button class="btn btn-success border-dark" type="submit">
+                Save
+              </button>
+            </form>
+          </div>
+        </template>
+      </form-modal>
+    </section>
   </main>
 </template>
 
@@ -82,6 +114,7 @@ export default {
   },
   data() {
     return {
+      bugEdit: {},
       date: {},
       newNote: {},
     };
@@ -140,6 +173,15 @@ export default {
         deletePath: "bugs/" + this.activeBug.id,
         resource: "activeBug",
         path: "bugs/" + this.activeBug.id,
+      });
+    },
+    editBug() {
+      this.editBug.creatorEmail = this.activeBug.creatorEmail;
+      this.$store.dispatch("edit", {
+        getPath: "bugs/" + this.activeBug.id,
+        path: "bugs/" + this.activeBug.id,
+        data: this.bugEdit,
+        resource: "activeBug",
       });
     },
   },
