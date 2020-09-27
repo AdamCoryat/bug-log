@@ -121,19 +121,19 @@ Delete
 [x] - Home shows all bugs
 [x]- BugDetails displays the details of a bug and its Notes
 []- Bugs can be filtered by their status
-[]- Creating a new bug automatically navigates to the BugDetails view
+[x]- Creating a new bug automatically navigates to the BugDetails view
 [x]- Navbar to allow navigating back to Home view
-[]- Styling Indication on main page that bug is closed (color, strike-through, etc.)
+[x]- Styling Indication on main page that bug is closed (color, strike-through, etc.)
 [x]- Bugs display last modified date
 
 ### Functionality
 
 [x]- Users Can Register, Login, and Logout (this should work out of the box, don't break it)
-[]- Users can only modify/delete data they created
-[]- Bugs can be created from the Home view
-[]- Bugs can be closed from the BugDetails view
+[x]- Users can only modify/delete data they created
+[x]- Bugs can be created from the Home view
+[x]- Bugs can be closed from the BugDetails view
 []- User is prompted "are you sure?" when closing a Bug
-[]- Notes can be added and removed from a bug in the BugDetails view
+[x]- Notes can be added and removed from a bug in the BugDetails view
 []- User prompt to remove Note from Bug
 []- A Bug can be edited
 [x]- Cannot edit a Bug after it is closed

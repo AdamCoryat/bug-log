@@ -7,8 +7,10 @@
           <h5 class="text-light d-flex justify-content-between">
             Created By: {{ activeBug.creatorEmail }}
             {{ activeBug.updatedAt }}
-            <span>Status:</span>
+            <span v-if="!activeBug.closed">Open</span>
+            <span v-if="activeBug.closed">Closed</span>
           </h5>
+          <button v-if="isCreator" @click="closeBug">close</button>
           <div class="card text-light bg-bug p-1">
             <p>{{ activeBug.description }}</p>
           </div>
@@ -91,6 +93,11 @@ export default {
     notes() {
       return this.$store.state.notes;
     },
+    isCreator() {
+      let profileEmail = this.$store.state.profile.email.toLowerCase();
+      let creatorEmail = this.activeBug.creatorEmail.toLowerCase();
+      return profileEmail == creatorEmail;
+    },
   },
   methods: {
     dateFormat() {
@@ -126,6 +133,13 @@ export default {
         path: "notes",
         resource: "notes",
         data: this.newNote,
+      });
+    },
+    closeBug() {
+      this.$store.dispatch("delete", {
+        deletePath: "bugs/" + this.activeBug.id,
+        resource: "activeBug",
+        path: "bugs/" + this.activeBug.id,
       });
     },
   },

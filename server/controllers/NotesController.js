@@ -23,9 +23,10 @@ export class NotesController extends BaseController {
   }
   async editNote(req, res, next) {
     try {
+      req.body.creatorEmail = req.userInfo.email;
       let data = await notesService.edit(
         req.params.id,
-        req.userInfo.email,
+        req.body.creatorEmail,
         req.body
       );
       return res.send(data);
