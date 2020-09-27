@@ -39,6 +39,8 @@ class BugsService {
     });
     // @ts-ignore
     data.closed = true;
+    // @ts-ignore
+    data.closedDate = new Date();
     let modified = await dbContext.Bugs.findOneAndUpdate(
       { _id: id, creatorEmail: creatorEmail },
       data,

@@ -49,10 +49,10 @@ export default new Vuex.Store({
       try {
         let res = await api.post(payload.path, payload.data);
         dispatch("getResource", {
-          path: payload.getPath,
+          path: "bugs/" + res.data.id,
           resource: payload.resource,
         });
-        // router.push({ name: "Details", params: { id: res.data.id } });
+        router.push({ name: "Details", params: { id: res.data.id } });
       } catch (error) {
         console.error(error);
       }

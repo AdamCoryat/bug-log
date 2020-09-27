@@ -4,7 +4,7 @@
       <div class="col-8">
         <div class="card bg-bug p-2 m-2">
           <button
-            v-if="$auth.isAuthenticated"
+            v-if="isCreator && !activeBug.closed"
             type="button"
             class="btn btn-primary btn-lg"
             data-toggle="modal"
@@ -15,11 +15,18 @@
           <h1 class="text-light text-center">{{ activeBug.title }}</h1>
           <h5 class="text-light d-flex justify-content-between">
             Created By: {{ activeBug.creatorEmail }}
-            {{ activeBug.updatedAt }}
+
             <span v-if="!activeBug.closed">Open</span>
-            <span v-if="activeBug.closed">Closed</span>
+            <span v-if="!activeBug.closed"
+              >Last Modified:{{ activeBug.updatedAt | formatDate }}</span
+            >
+            <span v-if="activeBug.closed"
+              >Closed : {{ activeBug.closedDate | formatDate }}</span
+            >
           </h5>
-          <button v-if="isCreator" @click="closeBug">close</button>
+          <button v-if="isCreator && !activeBug.closed" @click="closeBug">
+            close
+          </button>
           <div class="card text-light bg-bug p-1">
             <p>{{ activeBug.description }}</p>
           </div>
@@ -176,7 +183,7 @@ export default {
       });
     },
     editBug() {
-      this.editBug.creatorEmail = this.activeBug.creatorEmail;
+      this.editBug.creatorEmail = this.activeBug.creatorEmail.toLowerCase();
       this.$store.dispatch("edit", {
         getPath: "bugs/" + this.activeBug.id,
         path: "bugs/" + this.activeBug.id,

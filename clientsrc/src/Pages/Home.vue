@@ -1,26 +1,33 @@
 <template>
   <main class="home container-fluid">
     <section class="row">
-      <button
-        v-if="$auth.isAuthenticated"
-        type="button"
-        class="btn btn-primary btn-lg"
-        data-toggle="modal"
-        data-target="#bugForm"
-      >
-        Add Bug
-      </button>
-      <button type="button" class="btn btn-primary btn-lg" @click="filterBugs">
-        Filter Closed
-      </button>
-
       <div class="col-12 justify-content-center d-flex">
         <div
           class="card m-2 bug-window d-flex justify-content-center flex-wrap align-content-center"
         >
           <section class="row">
-            <div class="card bug-screen border-primary">
-              <div class="card bg-info d-flex justify-content-between">
+            <div
+              class="card bug-screen border-primary d-flex justifty-content-center"
+            >
+              <div class="col-12 d-flex justify-content-between">
+                <button
+                  v-if="$auth.isAuthenticated"
+                  type="button"
+                  class="btn btn-primary btn-lg"
+                  data-toggle="modal"
+                  data-target="#bugForm"
+                >
+                  Add Bug
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-lg"
+                  @click="filterBugs"
+                >
+                  Filter Closed
+                </button>
+              </div>
+              <div class="card bg-info">
                 <h4 class="d-flex justify-content-between">
                   <span class="col-3">Title:</span
                   ><span class="col-3">Creator:</span
@@ -95,17 +102,15 @@ export default {
   },
   methods: {
     addBug() {
-      // document.getElementById('bugForm').setAttribute.data-dismiss="modal
       this.$store.dispatch("createBug", {
-        getPath: "bugs",
         path: "bugs",
         resource: "activeBug",
         data: this.newBug,
       });
       this.newBug = {};
+      $(".modal-backdrop").hide();
     },
     filterBugs() {
-      debugger;
       return this.$store.state.bugs.filter((b) => b.closed == false);
       console.log(this.$store.state.bugs);
     },
