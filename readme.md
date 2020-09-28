@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/github/AdamCoryat/bug-log/maintainability"><img src="https://api.codeclimate.com/v1/badges/ff724dfec0527047abb1/maintainability" /></a>
+
 # Bug-Report
 
 Welcome to the Bug-Report!

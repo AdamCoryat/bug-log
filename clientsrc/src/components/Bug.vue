@@ -1,7 +1,11 @@
 <template>
   <div class="bug">
     <router-link :to="{ name: 'Details', params: { id: bug.id } }">
-      <div v-if="!bug.closed" class="card d-flex bg-secondary">
+      <section
+        id="open-bug"
+        v-if="!bug.closed"
+        class="card d-flex bg-secondary"
+      >
         <p class="text-light d-flex justify-content-between">
           <span class="col-3">{{ bug.title }}</span
           ><span class="col-3">{{ bug.creatorEmail }}</span
@@ -10,8 +14,12 @@
             bug.updatedAt | formatDate("timezone", "America/Denver")
           }}</span>
         </p>
-      </div>
-      <div v-if="bug.closed" class="card d-flex bg-secondary">
+      </section>
+      <section
+        id="closed-bug"
+        v-if="bug.closed"
+        class="card d-flex bg-secondary"
+      >
         <p class="text-info d-flex justify-content-between">
           <span class="col-3">{{ bug.title }}</span
           ><span class="col-3">{{ bug.creatorEmail }}</span
@@ -20,7 +28,7 @@
             bug.updatedAt | formatDate("timezone", "America/Denver")
           }}</span>
         </p>
-      </div>
+      </section>
     </router-link>
   </div>
 </template>

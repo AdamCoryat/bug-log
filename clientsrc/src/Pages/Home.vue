@@ -5,7 +5,7 @@
         <div
           class="card m-2 bug-window d-flex justify-content-center flex-wrap align-content-center"
         >
-          <section class="row">
+          <section id="bug-interface" class="row">
             <div
               class="card bug-screen border-primary d-flex justifty-content-center"
             >
@@ -59,23 +59,25 @@
                   </div>
                 </div>
               </div>
-              <div class="card bg-info">
+              <section id="title" class="card bg-info">
                 <h4 class="d-flex justify-content-between">
                   <span class="col-3">Title:</span
                   ><span class="col-3">Creator:</span
                   ><span class="col-3">Status:</span
                   ><span class="col-3">Last Modified:</span>
                 </h4>
-              </div>
-              <div v-if="allFilter" class="bug-list">
-                <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
-              </div>
-              <div v-if="closedFilter" class="bug-list">
-                <bug v-for="bug in closedBugs" :key="bug.id" :bug="bug" />
-              </div>
-              <div v-if="openFilter" class="bug-list">
-                <bug v-for="bug in openBugs" :key="bug.id" :bug="bug" />
-              </div>
+              </section>
+              <section id="bug-injection">
+                <div v-if="allFilter" class="bug-list">
+                  <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
+                </div>
+                <div v-if="closedFilter" class="bug-list">
+                  <bug v-for="bug in closedBugs" :key="bug.id" :bug="bug" />
+                </div>
+                <div v-if="openFilter" class="bug-list">
+                  <bug v-for="bug in openBugs" :key="bug.id" :bug="bug" />
+                </div>
+              </section>
             </div>
           </section>
         </div>

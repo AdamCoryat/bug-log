@@ -108,14 +108,12 @@
               type="text"
               placeholder="Title..."
               v-model="bugEdit.title"
-              required
               class="bg-bug text-info"
             />
             <input
               type="text"
               placeholder="Body..."
               v-model="bugEdit.description"
-              required
               class="bg-bug text-info"
             />
             <button class="btn btn-outline-primary" type="submit">

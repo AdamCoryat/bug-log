@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <router-link class="navbar-brand text-light" :to="{ name: 'Home' }"
       >Bug-Spray</router-link
     >
@@ -12,7 +12,7 @@
       aria-expanded="false"
       aria-label="Toggle navigation"
     >
-      <span class="navbar-toggler-icon"></span>
+      <span class="navbar-toggler-icon icon-color"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
@@ -75,4 +75,7 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.icon-color {
+}
+</style>
