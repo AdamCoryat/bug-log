@@ -10,39 +10,54 @@
               class="card bug-screen border-primary d-flex justifty-content-center"
             >
               <div class="col-12 d-flex justify-content-between">
-                <button
-                  type="button"
-                  class="btn btn-primary "
-                  @click="
-                    closedFilter = !closedFilter;
-                    openFilter = false;
-                    allFilter = false;
-                  "
-                >
-                  Closed
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary "
-                  @click="
-                    openFilter = !openFilter;
-                    closedFilter = false;
-                    allFilter = false;
-                  "
-                >
-                  Open
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-primary "
-                  @click="
-                    allFilter = !allFilter;
-                    closedFilter = false;
-                    openFilter = false;
-                  "
-                >
-                  All
-                </button>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-danger m-1 dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    Filter
+                  </button>
+                  <div
+                    class="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a
+                      class="dropdown-item"
+                      @click="
+                        allFilter = !allFilter;
+                        closedFilter = false;
+                        openFilter = false;
+                      "
+                      href="#"
+                      >All</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      @click="
+                        closedFilter = !closedFilter;
+                        openFilter = false;
+                        allFilter = false;
+                      "
+                      href="#"
+                    >
+                      Closed</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      @click="
+                        openFilter = !openFilter;
+                        closedFilter = false;
+                        allFilter = false;
+                      "
+                      href="#"
+                      >Open</a
+                    >
+                  </div>
+                </div>
               </div>
               <div class="card bg-info">
                 <h4 class="d-flex justify-content-between">
