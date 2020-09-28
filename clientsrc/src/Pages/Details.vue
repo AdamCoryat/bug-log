@@ -1,100 +1,122 @@
 <template>
   <main class="bug-details container-fluid">
-    <section class="row justify-content-center">
-      <div class="col-8">
+    <section id="bug-body" class="row justify-content-center">
+      <div class="col-12 col-md-8 bg-bug p-2 m-2">
         <div class="card bg-bug p-2 m-2">
-          <button
-            v-if="isCreator && !activeBug.closed"
-            type="button"
-            class="btn btn-primary btn-lg"
-            data-toggle="modal"
-            data-target="#editForm"
-          >
-            Edit Bug
-          </button>
-          <h1 class="text-light text-center">{{ activeBug.title }}</h1>
-          <h5 class="text-light d-flex justify-content-between">
-            Created By: {{ activeBug.creatorEmail }}
-
-            <span v-if="!activeBug.closed">Open</span>
-            <span v-if="!activeBug.closed"
-              >Last Modified:{{ activeBug.updatedAt | formatDate }}</span
-            >
-            <span v-if="activeBug.closed"
-              >Closed : {{ activeBug.closedDate | formatDate }}</span
-            >
-          </h5>
-          <button v-if="isCreator && !activeBug.closed" @click="closeBug">
-            close
-          </button>
+          <div id="bug-buttons" class="d-flex justify-content-between p-1">
+            <i
+              class="fa fa-pencil-square-o text-light text-left pointer"
+              v-if="isCreator && !activeBug.closed"
+              type="button"
+              data-toggle="modal"
+              data-target="#editForm"
+            ></i>
+            <i
+              class="fa fa-times text-light text-right pointer"
+              v-if="isCreator && !activeBug.closed"
+              @click="closeBug"
+            ></i>
+          </div>
+          <div id="bug-info">
+            <div id="email-title">
+              <h1 class="text-light text-center p-2">{{ activeBug.title }}</h1>
+              <h5 class="text-warning">
+                Created By:
+                <span class="email text-info align-self-start">{{
+                  activeBug.creatorEmail
+                }}</span>
+              </h5>
+            </div>
+            <div id="open-info">
+              <h5 class="open text-open" v-if="!activeBug.closed">
+                <span class="text-warning">Status: </span>Open
+              </h5>
+              <h5 class="text-warning" v-if="!activeBug.closed">
+                Last Modified:
+                <span class="date text-info justify-self-end">{{
+                  activeBug.updatedAt | formatDate
+                }}</span>
+              </h5>
+            </div>
+            <div id="closed-info">
+              <h5 class="text-closed" v-if="activeBug.closed">
+                <span class="text-warning">Status: </span>Closed
+              </h5>
+              <h5 class="text-warning" v-if="activeBug.closed">
+                Time Closed:
+                <span class="date text-info date">{{
+                  activeBug.closedDate | formatDate
+                }}</span>
+              </h5>
+            </div>
+          </div>
           <div class="card text-light bg-bug p-1">
             <p>{{ activeBug.description }}</p>
           </div>
         </div>
       </div>
     </section>
-    <section class="row justify-content-center">
-      <div class="card col-8 p-2 m-2 bg-bug">
-        <div class="card-title bg-bug">
-          <button
+    <section id="note-card" class="row justify-content-center">
+      <div id="note-col" class="card col-12 col-md-8 p-2 m-2 bg-bug">
+        <div id="note-title" class="card-title bg-bug">
+          <i
+            class="fa fa-plus text-light p-1"
             v-if="$auth.isAuthenticated"
             type="button"
-            class="btn btn-primary btn-lg"
             data-toggle="modal"
             data-target="#noteForm"
-          >
-            Add Note
-          </button>
-          <h5 class="d-flex justify-content-between bg-bug text-light p-1">
-            <span class="col-3">Name:</span><span class="col-6">Message:</span
-            ><span class="col-3 text-right">Delete:</span>
-          </h5>
-          <div class="card-body">
+          ></i>
+          <h4 class="d-flex justify-content-between bg-bug text-info p-1">
+            Notes:
+          </h4>
+          <div id="note-injection" class="card-body">
             <note v-for="note in notes" :key="note.id" :note="note" />
           </div>
         </div>
       </div>
     </section>
-    <section>
+    <section id="add-note">
       <form-modal id="noteForm">
         <template v-slot:header>
-          <h5>Create New Bug</h5>
+          <h5>New Note</h5>
         </template>
         <template v-slot:body>
           <div class="text-center d-flex">
             <form @submit.prevent="addNote" class="m-2">
               <input
                 type="text"
-                placeholder="title"
+                placeholder="Content..."
                 v-model="newNote.content"
                 required
+                class="bg-bug text-info"
               />
-              <button class="btn btn-success border-dark" type="submit">
-                Create Bug
-              </button>
+              <i class="fa fa-plus pointer text-light m-2" type="submit"> </i>
             </form>
           </div>
         </template>
       </form-modal>
     </section>
-    <section id="edit">
+    <section id="edit-modal">
       <form-modal id="editForm">
         <template v-slot:header>
           <h5>Edit Bug</h5>
         </template>
         <template v-slot:body>
-          <div class="text-center d-flex">
+          <div class="text-center">
             <form @submit.prevent="editBug" class="m-2">
-              <input type="text" placeholder="title" v-model="bugEdit.title" />
               <input
                 type="text"
-                placeholder="description"
-                v-model="bugEdit.description"
-                class="text-light"
+                placeholder="Title..."
+                v-model="bugEdit.title"
+                class="bg-bug text-info"
               />
-              <button class="btn btn-success border-dark" type="submit">
-                Save
-              </button>
+              <input
+                type="text"
+                placeholder="Description..."
+                v-model="bugEdit.description"
+                class="bg-bug text-info"
+              />
+              <i class="fa fa-plus pointer text-light m-2" type="submit"> </i>
             </form>
           </div>
         </template>
@@ -104,6 +126,7 @@
 </template>
 
 <script>
+import { onAuth } from "@bcwdev/auth0-vue";
 import Note from "../components/Note.vue";
 import FormModal from "../components/FormModal.vue";
 export default {
@@ -133,9 +156,11 @@ export default {
     notes() {
       return this.$store.state.notes;
     },
-    isCreator() {
-      let profileEmail = this.$store.state.profile.email.toLowerCase();
-      let creatorEmail = this.activeBug.creatorEmail.toLowerCase();
+    async isCreator() {
+      await this.$store.state.profile;
+      await this.$store.state.activeBug;
+      let profileEmail = await this.$store.state.profile.email;
+      let creatorEmail = await this.activeBug.creatorEmail;
       return profileEmail == creatorEmail;
     },
   },
@@ -166,7 +191,6 @@ export default {
     },
     addNote() {
       this.newNote.bugId = this.$route.params.id;
-
       this.newNote.creatorEmail = this.$store.state.profile.email.toLowerCase();
       this.$store.dispatch("create", {
         getPath: "bugs/" + this.$route.params.id + "/notes",
@@ -174,6 +198,7 @@ export default {
         resource: "notes",
         data: this.newNote,
       });
+      this.newNote = {};
     },
     closeBug() {
       this.$store.dispatch("delete", {
@@ -190,6 +215,7 @@ export default {
         data: this.bugEdit,
         resource: "activeBug",
       });
+      this.bugEdit = {};
     },
   },
   components: {
@@ -199,4 +225,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.email {
+  font-size: 1rem;
+}
+.date {
+  font-size: 1rem;
+}
+</style>

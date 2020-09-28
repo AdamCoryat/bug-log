@@ -41,11 +41,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.text-closed {
-  color: rgb(44, 80, 238);
-}
-.text-open {
-  color: greenyellow;
-}
-</style>
+<style scoped></style>

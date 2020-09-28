@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "../router";
 import { api } from "./AxiosService";
+import ns from "./NotificationService.js";
 
 Vue.use(Vuex);
 
@@ -53,6 +54,7 @@ export default new Vuex.Store({
           resource: payload.resource,
         });
         router.push({ name: "Details", params: { id: res.data.id } });
+        ns.toast("Created!", 2000, "success");
       } catch (error) {
         console.error(error);
       }
@@ -64,6 +66,7 @@ export default new Vuex.Store({
           path: payload.getPath,
           resource: payload.resource,
         });
+        ns.toast("Created!", 2000, "success");
       } catch (error) {
         console.error(error);
       }
@@ -75,13 +78,14 @@ export default new Vuex.Store({
           path: payload.getPath,
           resource: payload.resource,
         });
+        ns.toast("Saved!", 2000, "success");
       } catch (error) {
         console.error(error);
       }
     },
     async delete({ dispatch }, payload) {
       try {
-        await api.delete(payload.deletePath);
+        if (await ns.confirmAction()) await api.delete(payload.deletePath);
         dispatch("getResource", {
           path: payload.path,
           resource: payload.resource,

@@ -1,11 +1,34 @@
 <template>
   <div class="note">
-    <p class="d-flex justify-content-between text-light">
-      <span class="col-3">{{ note.creatorEmail }}</span
-      ><span class="col-6">{{ note.content }}</span
-      ><button v-if="isCreator" @click="deleteNote">delete</button>
-    </p>
-    <button
+    <section id="note-info" class="text-light">
+      <div class="col-12 text-warning p-1 m-1">
+        <div id="note-buttons" class="d-flex justify-content-between p-1">
+          <i
+            class="fa fa-pencil-square-o text-light pointer"
+            v-if="isCreator"
+            @click="toggleEdit = !toggleEdit"
+          ></i>
+          <i
+            class="fa fa-times text-light pointer"
+            v-if="isCreator"
+            @click="deleteNote"
+          ></i>
+        </div>
+        <form v-if="toggleEdit" @submit.prevent="editNote" class="m-2">
+          <input
+            type="text"
+            placeholder="Content..."
+            v-model="noteEdit.content"
+            required
+          />
+        </form>
+        <p>{{ note.creatorEmail }}</p>
+      </div>
+      <section id="note-body" class="card bg-bug text-info">
+        {{ note.content }}
+      </section>
+    </section>
+    <!-- <button
       v-if="isCreator"
       type="button"
       class="btn btn-primary btn-lg"
@@ -13,18 +36,9 @@
       data-target="#noteEdit"
     >
       Edit
-    </button>
-    <form @submit.prevent="editNote" class="m-2">
-      <input
-        type="text"
-        placeholder="title"
-        v-model="noteEdit.content"
-        required
-      />
-      <button class="btn btn-success border-dark" type="submit">edit</button>
-    </form>
-
-    <!-- <form-modal id="noteEdit">
+    </button> -->
+    <!--  -->
+    <form-modal id="noteEdit">
       <template v-slot:header>
         <h5>Create New Bug</h5>
       </template>
@@ -47,7 +61,7 @@
           </form>
         </div>
       </template>
-    </form-modal> -->
+    </form-modal>
   </div>
 </template>
 
@@ -61,6 +75,7 @@ export default {
   data() {
     return {
       noteEdit: {},
+      toggleEdit: false,
     };
   },
   computed: {
