@@ -99,21 +99,21 @@
     <section>
       <form-modal id="editForm">
         <template v-slot:header>
-          <h5>New Note</h5>
+          <h5>Edit Bug</h5>
         </template>
         <template v-slot:body>
           <div class="text-center d-flex"></div>
           <form @submit.prevent="editBug" class="m-2">
             <input
               type="text"
-              placeholder="Content..."
+              placeholder="Title..."
               v-model="bugEdit.title"
               required
               class="bg-bug text-info"
             />
             <input
               type="text"
-              placeholder="Content..."
+              placeholder="Body..."
               v-model="bugEdit.description"
               required
               class="bg-bug text-info"
@@ -159,12 +159,8 @@ export default {
     notes() {
       return this.$store.state.notes;
     },
-    async isCreator() {
-      await this.$store.state.profile;
-      await this.$store.state.activeBug;
-      let profileEmail = await this.$store.state.profile.email;
-      let creatorEmail = await this.activeBug.creatorEmail;
-      return profileEmail == creatorEmail;
+    isCreator() {
+      return this.$store.state.profile.email == this.activeBug.creatorEmail;
     },
   },
   methods: {

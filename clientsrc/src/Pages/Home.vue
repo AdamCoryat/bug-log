@@ -28,7 +28,7 @@
                     <a
                       class="dropdown-item"
                       @click="
-                        allFilter = !allFilter;
+                        allFilter = true;
                         closedFilter = false;
                         openFilter = false;
                       "
@@ -38,7 +38,7 @@
                     <a
                       class="dropdown-item"
                       @click="
-                        closedFilter = !closedFilter;
+                        closedFilter = true;
                         openFilter = false;
                         allFilter = false;
                       "
@@ -49,7 +49,7 @@
                     <a
                       class="dropdown-item"
                       @click="
-                        openFilter = !openFilter;
+                        openFilter = true;
                         closedFilter = false;
                         allFilter = false;
                       "
@@ -67,13 +67,13 @@
                   ><span class="col-3">Last Modified:</span>
                 </h4>
               </div>
-              <div v-if="allFilter">
+              <div v-if="allFilter" class="bug-list">
                 <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
               </div>
-              <div v-if="closedFilter">
+              <div v-if="closedFilter" class="bug-list">
                 <bug v-for="bug in closedBugs" :key="bug.id" :bug="bug" />
               </div>
-              <div v-if="openFilter">
+              <div v-if="openFilter" class="bug-list">
                 <bug v-for="bug in openBugs" :key="bug.id" :bug="bug" />
               </div>
             </div>
@@ -102,8 +102,8 @@
                 required
                 class="text-light"
               />
-              <button class="btn btn-success border-dark" type="submit">
-                Create Bug
+              <button class="btn btn-outline-primary" type="submit">
+                <i class="fa fa-plus pointer text-light m-2"></i>
               </button>
             </form>
           </div>
@@ -178,5 +178,20 @@ export default {
   min-height: 75vh;
   min-width: 65vw;
   background-color: rgba(0, 0, 0, 0.555);
+}
+.bug-list {
+  height: 70vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.bug-list::-webkit-scrollbar {
+  width: 1em;
+}
+.bug-list::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+.bug-list::-webkit-scrollbar-thumb {
+  background-color: rgb(7, 38, 162);
+  outline: 1px solid rgb(0, 0, 116);
 }
 </style>

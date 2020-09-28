@@ -27,7 +27,7 @@ export class BugsController extends BaseController {
   }
   async getById(req, res, next) {
     try {
-      req.body.creator = req.userInfo.email;
+      req.body.creator = req.userInfo.email.toLowerCase();
       let data = await bugsService.findById(req.params.id, req.user.email);
       return res.send(data);
     } catch (error) {
@@ -36,7 +36,7 @@ export class BugsController extends BaseController {
   }
   async getNotesByBugId(req, res, next) {
     try {
-      req.body.creator = req.userInfo.email;
+      req.body.creator = req.userInfo.email.toLowerCase();
       let id = req.params.id;
       let data = await notesService.getNotesByBugId({ bugId: id });
       return res.send(data);
@@ -46,7 +46,7 @@ export class BugsController extends BaseController {
   }
   async create(req, res, next) {
     try {
-      req.body.creatorEmail = req.userInfo.email;
+      req.body.creatorEmail = req.userInfo.email.toLowerCase();
       let data = await bugsService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {
@@ -55,11 +55,8 @@ export class BugsController extends BaseController {
   }
   async edit(req, res, next) {
     try {
-      let data = await bugsService.edit(
-        req.params.id,
-        req.userInfo.email,
-        req.body
-      );
+      let email = req.userInfo.email.toLowerCase();
+      let data = await bugsService.edit(req.params.id, email, req.body);
       return res.send(data);
     } catch (error) {
       next(error);
@@ -67,8 +64,8 @@ export class BugsController extends BaseController {
   }
   async delete(req, res, next) {
     try {
-      req.body.creatorEmail = req.userInfo.email;
-      await bugsService.softDelete(req.params.id, req.userInfo.email);
+      req.body.creatorEmail = req.userInfo.email.toLowerCase();
+      await bugsService.softDelete(req.params.id, req.body.creatorEmail);
       res.send("Successfully Closed!");
     } catch (error) {
       next(error);

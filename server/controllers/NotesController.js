@@ -14,7 +14,7 @@ export class NotesController extends BaseController {
 
   async createNote(req, res, next) {
     try {
-      req.body.creatorEmail = req.userInfo.email;
+      req.body.creatorEmail = req.userInfo.email.toLowerCase();
       let data = await notesService.create(req.body);
       return res.status(201).send(data);
     } catch (error) {
@@ -23,7 +23,7 @@ export class NotesController extends BaseController {
   }
   async editNote(req, res, next) {
     try {
-      req.body.creatorEmail = req.userInfo.email;
+      req.body.creatorEmail = req.userInfo.email.toLowerCase();
       let data = await notesService.edit(
         req.params.id,
         req.body.creatorEmail,
@@ -36,8 +36,8 @@ export class NotesController extends BaseController {
   }
   async deleteNote(req, res, next) {
     try {
-      req.body.creator = req.userInfo.email;
-      await notesService.delete(req.params.id, req.userInfo.email);
+      req.body.creatorEmail = req.userInfo.email.toLowerCase();
+      await notesService.delete(req.params.id, req.body.creatorEmail);
       return res.send("Successfully Deleted!");
     } catch (error) {
       next(error);
