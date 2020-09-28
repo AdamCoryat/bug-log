@@ -6,7 +6,9 @@
           <span class="col-3">{{ bug.title }}</span
           ><span class="col-3">{{ bug.creatorEmail }}</span
           ><span class="col-3 text-open">Open</span
-          ><span class="col-3">{{ bug.updatedAt | formatDate }}</span>
+          ><span class="col-3">{{
+            bug.updatedAt | formatDate("timezone", "America/Denver")
+          }}</span>
         </p>
       </div>
       <div v-if="bug.closed" class="card d-flex bg-secondary">
@@ -15,7 +17,7 @@
           ><span class="col-3">{{ bug.creatorEmail }}</span
           ><span class="col-3 text-closed">Closed</span
           ><span type="date" id="date" class="col-3">{{
-            bug.updatedAt | formatDate
+            bug.updatedAt | formatDate("timezone", "America/Denver")
           }}</span>
         </p>
       </div>

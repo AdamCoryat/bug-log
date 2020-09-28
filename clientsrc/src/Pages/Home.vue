@@ -11,20 +11,37 @@
             >
               <div class="col-12 d-flex justify-content-between">
                 <button
-                  v-if="$auth.isAuthenticated"
                   type="button"
-                  class="btn btn-primary btn-lg"
-                  data-toggle="modal"
-                  data-target="#bugForm"
+                  class="btn btn-primary "
+                  @click="
+                    closedFilter = !closedFilter;
+                    openFilter = false;
+                    allFilter = false;
+                  "
                 >
-                  Add Bug
+                  Closed
                 </button>
                 <button
                   type="button"
-                  class="btn btn-primary btn-lg"
-                  @click="filterBugs"
+                  class="btn btn-primary "
+                  @click="
+                    openFilter = !openFilter;
+                    closedFilter = false;
+                    allFilter = false;
+                  "
                 >
-                  Filter Closed
+                  Open
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary "
+                  @click="
+                    allFilter = !allFilter;
+                    closedFilter = false;
+                    openFilter = false;
+                  "
+                >
+                  All
                 </button>
               </div>
               <div class="card bg-info">
@@ -35,8 +52,14 @@
                   ><span class="col-3">Last Modified:</span>
                 </h4>
               </div>
-              <div>
+              <div v-if="allFilter">
                 <bug v-for="bug in bugs" :key="bug.id" :bug="bug" />
+              </div>
+              <div v-if="closedFilter">
+                <bug v-for="bug in closedBugs" :key="bug.id" :bug="bug" />
+              </div>
+              <div v-if="openFilter">
+                <bug v-for="bug in openBugs" :key="bug.id" :bug="bug" />
               </div>
             </div>
           </section>
@@ -90,6 +113,9 @@ export default {
   data() {
     return {
       newBug: {},
+      allFilter: true,
+      closedFilter: false,
+      openFilter: false,
     };
   },
   computed: {
@@ -98,6 +124,12 @@ export default {
     },
     activeBug() {
       return this.$store.state.activeBug;
+    },
+    openBugs() {
+      return this.$store.state.bugs.filter((b) => !b.closed);
+    },
+    closedBugs() {
+      return this.$store.state.bugs.filter((b) => b.closed);
     },
   },
   methods: {

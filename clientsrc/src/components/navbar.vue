@@ -33,6 +33,15 @@
       </ul>
       <span class="navbar-text">
         <button
+          v-if="$auth.isAuthenticated"
+          type="button"
+          class="btn btn-danger mx-1"
+          data-toggle="modal"
+          data-target="#bugForm"
+        >
+          Add Bug
+        </button>
+        <button
           class="btn btn-success"
           @click="login"
           v-if="!$auth.isAuthenticated"

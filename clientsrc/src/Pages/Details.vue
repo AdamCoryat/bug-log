@@ -96,29 +96,32 @@
         </template>
       </form-modal>
     </section>
-    <section id="edit-modal">
+    <section>
       <form-modal id="editForm">
         <template v-slot:header>
-          <h5>Edit Bug</h5>
+          <h5>New Note</h5>
         </template>
         <template v-slot:body>
-          <div class="text-center">
-            <form @submit.prevent="editBug" class="m-2">
-              <input
-                type="text"
-                placeholder="Title..."
-                v-model="bugEdit.title"
-                class="bg-bug text-info"
-              />
-              <input
-                type="text"
-                placeholder="Description..."
-                v-model="bugEdit.description"
-                class="bg-bug text-info"
-              />
-              <i class="fa fa-plus pointer text-light m-2" type="submit"> </i>
-            </form>
-          </div>
+          <div class="text-center d-flex"></div>
+          <form @submit.prevent="editBug" class="m-2">
+            <input
+              type="text"
+              placeholder="Content..."
+              v-model="bugEdit.title"
+              required
+              class="bg-bug text-info"
+            />
+            <input
+              type="text"
+              placeholder="Content..."
+              v-model="bugEdit.description"
+              required
+              class="bg-bug text-info"
+            />
+            <button class="btn btn-outline-primary" type="submit">
+              <i class="fa fa-plus pointer text-light m-2"></i>
+            </button>
+          </form>
         </template>
       </form-modal>
     </section>
@@ -165,33 +168,21 @@ export default {
     },
   },
   methods: {
-    dateFormat() {
-      let d = this.bug.updatedAt;
-      let dateArr = d.split("");
-      let date =
-        d[5] +
-        d[6] +
-        d[7] +
-        d[8] +
-        d[9] +
-        d[4] +
-        d[0] +
-        d[1] +
-        d[2] +
-        d[3] +
-        " " +
-        d[12] +
-        d[13] +
-        d[14] +
-        d[15] +
-        d[16] +
-        d[17] +
-        d[18];
-      this.date = date;
+    editBug() {
+      this.bugEdit.creatorEmail = this.activeBug.creatorEmail;
+      this.$store.dispatch("edit", {
+        getPath: "bugs/" + this.activeBug.id,
+        path: "bugs/" + this.activeBug.id,
+        data: this.bugEdit,
+        resource: "activeBug",
+      });
+      $(".modal-backdrop").hide();
+      $(".modal").hide();
+      this.bugEdit = {};
     },
     addNote() {
       this.newNote.bugId = this.$route.params.id;
-      this.newNote.creatorEmail = this.$store.state.profile.email.toLowerCase();
+      this.newNote.creatorEmail = this.$store.state.profile.email;
       this.$store.dispatch("create", {
         getPath: "bugs/" + this.$route.params.id + "/notes",
         path: "notes",
@@ -199,6 +190,8 @@ export default {
         data: this.newNote,
       });
       this.newNote = {};
+      $(".modal-backdrop").hide();
+      $(".modal").hide();
     },
     closeBug() {
       this.$store.dispatch("delete", {
@@ -206,16 +199,6 @@ export default {
         resource: "activeBug",
         path: "bugs/" + this.activeBug.id,
       });
-    },
-    editBug() {
-      this.editBug.creatorEmail = this.activeBug.creatorEmail.toLowerCase();
-      this.$store.dispatch("edit", {
-        getPath: "bugs/" + this.activeBug.id,
-        path: "bugs/" + this.activeBug.id,
-        data: this.bugEdit,
-        resource: "activeBug",
-      });
-      this.bugEdit = {};
     },
   },
   components: {

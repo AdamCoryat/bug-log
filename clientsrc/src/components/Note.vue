@@ -80,8 +80,8 @@ export default {
   },
   computed: {
     isCreator() {
-      let profileEmail = this.$store.state.profile.email.toLowerCase();
-      let creatorEmail = this.note.creatorEmail.toLowerCase();
+      let profileEmail = this.$store.state.profile.email;
+      let creatorEmail = this.note.creatorEmail;
       return profileEmail == creatorEmail;
     },
   },
