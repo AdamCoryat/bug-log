@@ -7,12 +7,18 @@
         class="card d-flex bg-secondary"
       >
         <p class="text-light d-flex justify-content-between">
-          <span class="col-3">{{ bug.title }}</span
-          ><span class="col-3">{{ bug.creatorEmail }}</span
-          ><span class="col-3 text-open">Open</span
-          ><span class="col-3">{{
-            bug.updatedAt | formatDate("timezone", "America/Denver")
-          }}</span>
+          <span class="col-3">
+            {{ bug.title }}
+          </span>
+          <span class="col-3">
+            {{ bug.creatorEmail }}
+          </span>
+          <span class="col-3 text-open">
+            Open
+          </span>
+          <span class="col-3">
+            {{ bug.updatedAt | formatDate("timezone", "America/Denver") }}
+          </span>
         </p>
       </section>
       <section
@@ -21,12 +27,18 @@
         class="card d-flex bg-secondary"
       >
         <p class="text-info d-flex justify-content-between">
-          <span class="col-3">{{ bug.title }}</span
-          ><span class="col-3">{{ bug.creatorEmail }}</span
-          ><span class="col-3 text-closed">Closed</span
-          ><span type="date" id="date" class="col-3">{{
-            bug.updatedAt | formatDate("timezone", "America/Denver")
-          }}</span>
+          <span class="col-3">
+            {{ bug.title }}
+          </span>
+          <span class="col-3">
+            {{ bug.creatorEmail }}
+          </span>
+          <span class="col-3 text-closed">
+            Closed
+          </span>
+          <span type="date" id="date" class="col-3">
+            {{ bug.updatedAt | formatDate("timezone", "America/Denver") }}
+          </span>
         </p>
       </section>
     </router-link>
