@@ -1,15 +1,11 @@
 <a href="https://codeclimate.com/github/AdamCoryat/bug-log/maintainability"><img src="https://api.codeclimate.com/v1/badges/ff724dfec0527047abb1/maintainability" /></a>
 
-# Bug-Report
+# Bug-Log
 
-Welcome to the Bug-Report!
+This application is built with a Vue2.Js Client-side as well as a Node.Js Server side. The purpose of this Application is to allow someone to Create, Track and Comment on Bugs. 
 
-You have been tasked with creating a tool to better report bugs for your team. The goal being, to better track bugs in your application, as well as the process taken to solve them.
+You can test out this application [Here](https://bug-spray.herokuapp.com/#/ "Bug-Log Hosted on Heroku")
 
-All bugs will have a title, description, who reported the bug, closedDate and whether or not it has been closed.
-
-Users can also add notes to the bug report providing detailed steps towards the bugs resolution.
-
-Once a bug has been closed, no further editing is allowed.
-
-Here are some mock-ups from the client.
+- All Bugs are listed on the Landing page. They can be sorted by opened or closed and all with the filter. 
+- If you create an Auth0 account you can create and edit your own bugs as well as close them when a solution is found.
+- You can comment on other bugs after you have created your account as well as edit and delete the comments. 
